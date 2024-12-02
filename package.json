@@ -1,0 +1,34 @@
+{
+  "name": "hackathon",
+  "version": "1.0.0",
+  "main": "popup.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js",
+    "dev": "webpack --watch --config webpack.dev.js",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@shoelace-style/shoelace": "^2.18.0",
+    "@types/chrome": "0.0.280",
+    "@types/marked": "^6.0.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^7.1.2",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.3",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "lit": "^3.2.1",
+    "marked": "^15.0.0"
+  },
+  "description": ""
+}

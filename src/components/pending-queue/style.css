@@ -1,0 +1,10 @@
+.pending-queue {
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pending-queue sl-tag {
+    cursor: pointer;
+} 
