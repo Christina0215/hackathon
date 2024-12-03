@@ -6,10 +6,11 @@ module.exports = {
   devtool: 'source-map',
   entry: {
     popup: './src/pages/popup/index.ts',
+    settings: './src/pages/settings/index.ts',
     history: './src/pages/history/index.ts',
     'shoelace-init': './src/utils/shoelace.ts',
     background: './src/scripts/background.ts',
-    'content-script': './src/scripts/content.ts'
+    'content-script': './src/scripts/content.ts',
   },
   module: {
     rules: [
@@ -52,31 +53,35 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { 
-          from: 'src/pages/popup/index.html', 
-          to: 'popup.html' 
+        {
+          from: 'src/pages/popup/index.html',
+          to: 'popup.html'
         },
-        { 
-          from: 'src/pages/history/index.html', 
-          to: 'history.html' 
+        {
+          from: 'src/pages/settings/index.html',
+          to: 'settings.html'
         },
-        { 
-          from: 'src/assets/styles/main.css', 
-          to: 'styles.css' 
+        {
+          from: 'src/pages/history/index.html',
+          to: 'history.html'
         },
-        { 
-          from: 'manifest.json', 
-          to: 'manifest.json' 
+        {
+          from: 'src/assets/styles/main.css',
+          to: 'styles.css'
         },
-        { 
-          from: 'src/assets/icons', 
-          to: 'icons' 
+        {
+          from: 'manifest.json',
+          to: 'manifest.json'
         },
-        { 
+        {
+          from: 'src/assets/icons',
+          to: 'icons'
+        },
+        {
           from: 'node_modules/@shoelace-style/shoelace/dist/themes/light.css',
           to: 'shoelace/themes/light.css'
         },
-        { 
+        {
           from: 'node_modules/@shoelace-style/shoelace/dist/assets',
           to: 'shoelace/assets'
         }

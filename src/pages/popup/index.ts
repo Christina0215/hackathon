@@ -2,7 +2,7 @@ import { marked } from 'marked';
 import { initShoelace } from '@/utils/shoelace';
 import aiService from '@/services/ai-service';
 import { PendingQueue } from '@/components/pending-queue';
-import { PageContent, SummaryRecord } from '@/types';
+import { PageContent, SummaryRecord, DEFAULT_SETTINGS, AISettings } from '@/types';
 import './style.css';
 
 initShoelace();
@@ -36,6 +36,7 @@ class PopupManager {
         document.getElementById('summarizeBtn')?.addEventListener('click', () => this.handleSummarize());
         document.getElementById('saveBtn')?.addEventListener('click', () => this.handleSave());
         document.getElementById('historyBtn')?.addEventListener('click', () => this.openHistory());
+        document.getElementById('settingsBtn')?.addEventListener('click', () => this.openSettings());
     }
 
     private async handleSummarize() {
@@ -85,11 +86,15 @@ class PopupManager {
     private async generateAndDisplaySummary(text: string) {
         if (!text) return;
 
+        // 获取设置
+        const { settings } = await chrome.storage.sync.get('settings');
+        const currentSettings = { ...DEFAULT_SETTINGS, ...settings };
+
         const summarizer = await aiService.createSummarizer({
-            sharedContext: '',
-            type: 'tl;dr',
-            format: 'markdown',
-            length: 'short'
+            sharedContext: currentSettings.promptForSummarize,
+            type: currentSettings.typeForSummarize,
+            format: currentSettings.formatForSummarize,
+            length: currentSettings.lengthForSummarize
         });
 
         const summarizeResultStream = summarizer.summarizeStreaming(text);
@@ -157,6 +162,10 @@ class PopupManager {
 
     private openHistory() {
         chrome.tabs.create({ url: 'history.html' });
+    }
+
+    private openSettings() {
+        chrome.tabs.create({ url: 'settings.html' });
     }
 
     private async initializeUI() {

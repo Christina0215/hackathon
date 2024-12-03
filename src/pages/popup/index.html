@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="styles.css">
@@ -7,13 +8,19 @@
   <script src="shoelace-init.js" type="module"></script>
   <script src="popup.js" type="module"></script>
 </head>
+
 <body>
   <div class="container">
     <div class="header">
-      <h1>My Chrome Extension</h1>
-      <sl-button variant="neutral" id="historyBtn" size="small" class="history-btn" tooltip="View History">
-        <sl-icon name="clock-history"></sl-icon>
-      </sl-button>
+      <h1>Essence.ai</h1>
+      <div class="header-actions">
+        <sl-button variant="neutral" size="small" class="history-btn" id="settingsBtn">
+          <sl-icon name="gear"></sl-icon>
+        </sl-button>
+        <sl-button variant="neutral" size="small" class="history-btn" id="historyBtn">
+          <sl-icon name="clock-history"></sl-icon>
+        </sl-button>
+      </div>
     </div>
 
     <div id="pending-queue" class="pending-queue">
@@ -37,9 +44,10 @@
         <sl-skeleton effect="pulse"></sl-skeleton>
         <sl-skeleton effect="pulse"></sl-skeleton>
       </div>
-      
+
       <div id="summary" class="summary-content"></div>
     </div>
   </div>
 </body>
-</html> 
+
+</html>

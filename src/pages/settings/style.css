@@ -1,0 +1,111 @@
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+}
+
+.header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--sl-color-neutral-200);
+}
+
+.header h1 {
+    color: var(--sl-color-neutral-900);
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.settings-section {
+    background: var(--sl-color-neutral-0);
+    border-radius: var(--sl-border-radius-medium);
+    padding: 2rem 2.5rem;
+    box-shadow: var(--sl-shadow-x-small);
+}
+
+.settings-section h2 {
+    color: var(--sl-color-neutral-700);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+}
+
+.settings-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+/* Prompt 文本框占据整行 */
+.settings-group sl-textarea {
+    grid-column: 1 / -1;
+    margin-bottom: 0.5rem;
+}
+
+/* 下拉框样式 */
+.settings-group sl-select::part(combobox) {
+    height: 45px;
+}
+
+/* 开关组件样式 */
+sl-switch {
+    --width: 52px;
+    --height: 28px;
+    margin-bottom: 1rem;
+}
+
+/* 按钮组样式 */
+.button-group {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--sl-color-neutral-200);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+}
+
+.button-group sl-button::part(base) {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0 2rem;
+    height: 45px;
+}
+
+/* 美化滚动条 */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--sl-color-neutral-100);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sl-color-neutral-300);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--sl-color-neutral-400);
+}
+
+.excluded-domains {
+    margin-top: 1rem;
+}
+
+.excluded-domains-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    min-height: 2rem;
+    padding: 0.5rem;
+    border: 1px solid var(--sl-color-neutral-200);
+    border-radius: var(--sl-border-radius-medium);
+}
+
+sl-tag {
+    --sl-color-neutral-600: var(--sl-color-primary-600);
+}

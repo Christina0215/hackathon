@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Settings - SynthSum</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="shoelace/themes/light.css">
+    <script src="shoelace-init.js" type="module"></script>
+    <script src="settings.js" type="module"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Settings</h1>
+        </div>
+
+        <div class="settings-section">
+            <h2>General</h2>
+            <sl-switch name="autoSummarize">Auto-summarize when page loads</sl-switch>
+            
+            <div class="excluded-domains">
+                <sl-input 
+                    id="domainInput"
+                    placeholder="Enter domain to exclude (e.g., example.com)"
+                    help-text="Press Enter to add domain">
+                </sl-input>
+                <div id="excludedDomainsList" class="excluded-domains-list">
+                    <!-- 动态添加的域名标签会显示在这里 -->
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Single Article Summarization</h2>
+            <div class="settings-group">
+                <sl-textarea name="promptForSummarize" label="Prompt" rows="3"
+                    help-text="Customize the instruction for summarization">
+                </sl-textarea>
+
+                <sl-select name="typeForSummarize" label="Type">
+                    <sl-option value="key-points">Key Points</sl-option>
+                    <sl-option value="tl;dr">TL;DR</sl-option>
+                    <sl-option value="teaser">Teaser</sl-option>
+                    <sl-option value="headline">Headline</sl-option>
+                </sl-select>
+
+                <sl-select name="formatForSummarize" label="Format">
+                    <sl-option value="markdown">Markdown</sl-option>
+                    <sl-option value="text">Plain Text</sl-option>
+                </sl-select>
+
+                <sl-select name="lengthForSummarize" label="Length">
+                    <sl-option value="short">Short</sl-option>
+                    <sl-option value="medium">Medium</sl-option>
+                    <sl-option value="long">Long</sl-option>
+                </sl-select>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Multi-Article Summarization</h2>
+            <div class="settings-group">
+                <sl-textarea name="promptForMultiSummarize" label="Prompt" rows="3"
+                    help-text="Customize the instruction for multi-article summarization">
+                </sl-textarea>
+
+                <sl-select name="typeForMultiSummarize" label="Type">
+                    <sl-option value="key-points">Key Points</sl-option>
+                    <sl-option value="tl;dr">TL;DR</sl-option>
+                    <sl-option value="teaser">Teaser</sl-option>
+                    <sl-option value="headline">Headline</sl-option>
+                </sl-select>
+
+                <sl-select name="formatForMultiSummarize" label="Format">
+                    <sl-option value="markdown">Markdown</sl-option>
+                    <sl-option value="text">Plain Text</sl-option>
+                </sl-select>
+
+                <sl-select name="lengthForMultiSummarize" label="Length">
+                    <sl-option value="short">Short</sl-option>
+                    <sl-option value="medium">Medium</sl-option>
+                    <sl-option value="long">Long</sl-option>
+                </sl-select>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Article Comparison</h2>
+            <div class="settings-group">
+                <sl-textarea name="promptForCompare" label="Prompt" rows="3"
+                    help-text="Customize the instruction for comparison">
+                </sl-textarea>
+
+                <sl-select name="typeForCompare" label="Type">
+                    <sl-option value="key-points">Key Points</sl-option>
+                    <sl-option value="tl;dr">TL;DR</sl-option>
+                    <sl-option value="teaser">Teaser</sl-option>
+                    <sl-option value="headline">Headline</sl-option>
+                </sl-select>
+
+                <sl-select name="formatForCompare" label="Format">
+                    <sl-option value="markdown">Markdown</sl-option>
+                    <sl-option value="text">Plain Text</sl-option>
+                </sl-select>
+
+                <sl-select name="lengthForCompare" label="Length">
+                    <sl-option value="short">Short</sl-option>
+                    <sl-option value="medium">Medium</sl-option>
+                    <sl-option value="long">Long</sl-option>
+                </sl-select>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <sl-button variant="neutral" id="resetBtn">Reset to Default</sl-button>
+            <sl-button variant="primary" id="saveBtn">Save Changes</sl-button>
+        </div>
+    </div>
+</body>
+
+</html>

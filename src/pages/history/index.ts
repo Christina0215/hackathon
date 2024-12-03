@@ -2,7 +2,7 @@ import { initShoelace } from '@/utils/shoelace';
 import type { SlAlert, SlDialog, SlCheckbox } from '@shoelace-style/shoelace';
 import aiService from '@/services/ai-service';
 import { marked } from 'marked';
-import { SummaryRecord } from '@/types';
+import { SummaryRecord, DEFAULT_SETTINGS } from '@/types';
 import './style.css';
 
 // 初始化 Shoelace
@@ -64,11 +64,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
         });
 
-        const processBtn = document.getElementById('processBtn') as HTMLElement;
-        if (processBtn) {
-            processBtn.toggleAttribute('disabled', selectedRecords.length === 0);
-        }
-
+        updateButtonState(selectedRecords.length);
         updateSelectedCount();
     });
 
@@ -148,7 +144,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             <div class="footer-left">
                 <sl-tag variant="neutral" size="small">
                     <sl-icon slot="prefix" name="text-paragraph"></sl-icon>
-                    ${record.summary.length} 字
+                    ${record.summary.length} characters
                 </sl-tag>
             </div>
             <div class="record-actions">
@@ -197,7 +193,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             const alert = document.createElement('sl-alert') as SlAlert;
             alert.variant = 'primary';
             alert.closable = true;
-            alert.innerHTML = 'Are you sure you want to delete this record?';
+            alert.innerHTML = 'Record deleted';
+
+            setTimeout(() => alert.hide(), 3000);
 
             document.body.appendChild(alert);
             alert.toast();
@@ -226,6 +224,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                 alert.variant = 'success';
                 alert.closable = true;
                 alert.innerHTML = 'Copied to clipboard';
+
+                setTimeout(() => alert.hide(), 3000);
+
                 document.body.appendChild(alert);
                 alert.toast();
             }
@@ -263,11 +264,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             selectedRecords = selectedRecords.filter(r => r !== id);
         }
 
-        const processBtn = document.getElementById('processBtn') as HTMLElement;
-        if (processBtn) {
-            processBtn.toggleAttribute('disabled', selectedRecords.length === 0);
-        }
-
+        updateButtonState(selectedRecords.length);
         updateSelectedCount();
     });
 
@@ -275,14 +272,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     const updateButtonState = (selectedCount: number) => {
         const processBtn = document.getElementById('processBtn') as HTMLElement;
         if (processBtn) {
-            processBtn.toggleAttribute('disabled', selectedCount === 0);
+            processBtn.toggleAttribute('disabled', selectedCount < 2);
         }
     };
 
     // 添加新的事件监听器
     document.addEventListener('sl-select', async e => {
-        const menuItem = e.detail.item
-        console.log(menuItem)
+        const menuItem = e.detail.item;
         if (!menuItem) return;
 
         const selectedContent = records
@@ -290,10 +286,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             .map(r => r.summary)
             .join('\n\n');
 
-        // 创建对话框并立即显示
         const dialog = document.createElement('sl-dialog') as SlDialog;
         dialog.label = menuItem.id === 'compareBtn' ? 'Comparison Result' : 'Summary Result';
-        
+
         // 添加骨架屏和内容容器
         dialog.innerHTML = `
             <div class="dialog-content">
@@ -306,23 +301,28 @@ document.addEventListener('DOMContentLoaded', async function () {
                 </div>
                 <div id="dialog-summary" class="summary-content" style="display: none; max-height: 400px; overflow-y: auto;"></div>
             </div>
-            <sl-button slot="footer" variant="primary">Close</sl-button>
         `;
 
         document.body.appendChild(dialog);
         dialog.show();
 
         try {
-            const summarizer = await aiService.createSummarizer({
-                sharedContext: menuItem.id === 'compareBtn'
-                    ? "Please compare and analyze the following content, focusing on their similarities, differences, and relationships. Organize your analysis in a clear structure."
-                    : "Please summarize the following content, extract the key points and main ideas. Present the summary in a clear and concise way.",
-                type: menuItem.id === 'compareBtn' ? 'key-points' : 'tl;dr',
-                format: 'markdown',
-                length: 'medium'
-            });
+            // 获取设置
+            const { settings } = await chrome.storage.sync.get('settings');
+            const currentSettings = { ...DEFAULT_SETTINGS, ...settings };
 
+            // 根据操作类型选择对应的设置
+            const isCompare = menuItem.id === 'compareBtn';
+            const options = {
+                sharedContext: isCompare ? currentSettings.promptForCompare : currentSettings.promptForMultiSummarize,
+                type: isCompare ? currentSettings.typeForCompare : currentSettings.typeForMultiSummarize,
+                format: isCompare ? currentSettings.formatForCompare : currentSettings.formatForMultiSummarize,
+                length: isCompare ? currentSettings.lengthForCompare : currentSettings.lengthForMultiSummarize
+            };
+
+            const summarizer = await aiService.createSummarizer(options);
             const summarizeResultStream = summarizer.summarizeStreaming(selectedContent);
+
             let outputText = '';
             let previousLength = 0;
 
@@ -337,11 +337,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (skeletonElement?.style.display !== 'none') {
                     skeletonElement.style.display = 'none';
                 }
-                
+
                 const newContent = segment.slice(previousLength);
                 previousLength = segment.length;
                 outputText += newContent;
-                
+
                 if (summaryElement) {
                     summaryElement.innerHTML = await marked.parse(outputText);
                 }

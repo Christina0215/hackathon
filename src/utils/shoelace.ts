@@ -16,12 +16,14 @@ const components = [
     'tag',
     'dropdown',
     'menu',
-    'menu-item'
+    'menu-item',
+    'switch',
+    'textarea'
 ];
 
 export function initShoelace() {
     setBasePath('./shoelace/');
-    
+
     components.forEach(component => {
         import(`@shoelace-style/shoelace/dist/components/${component}/${component}.js`);
     });

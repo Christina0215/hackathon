@@ -1,6 +1,8 @@
 .container {
   width: 300px;
   padding: 20px;
+  background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.02);
 }
 
 .header {
@@ -8,11 +10,17 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sl-color-neutral-200);
 }
 
 .header h1 {
   margin: 0;
   font-size: 1.2rem;
+  background: linear-gradient(120deg, var(--sl-color-primary-600), var(--sl-color-primary-700));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
 }
 
 /* History按钮样式 */
@@ -111,9 +119,16 @@
   margin: 16px 0;
   padding: 16px;
   border: 1px solid var(--sl-color-neutral-200);
-  border-radius: 8px;
+  border-radius: 12px;
   background-color: var(--sl-color-neutral-50);
   min-height: 100px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.content-area:hover {
+  border-color: var(--sl-color-neutral-300);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* 骨架屏样式 */
@@ -138,12 +153,19 @@
   width: 50%;
 }
 
+.skeleton-container sl-skeleton::part(base) {
+  border-radius: 6px;
+  height: 16px;
+}
+
 /* 摘要内容样式 */
 .summary-content {
   line-height: 1.6;
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
+  color: var(--sl-color-neutral-700);
+  font-size: 0.95rem;
 }
 
 .summary-content p {
@@ -175,6 +197,17 @@
 
 .pending-queue sl-tag {
   cursor: pointer;
+}
+
+.pending-queue sl-tag::part(base) {
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.pending-queue sl-tag:hover::part(base) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
 /* 添加按钮样式 */
@@ -223,4 +256,35 @@
     transform: scale(1) rotate(0);
     opacity: 1;
   }
+}
+
+/* 添加滚动条样式 */
+.content-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content-area::-webkit-scrollbar-track {
+  background: var(--sl-color-neutral-100);
+  border-radius: 4px;
+}
+
+.content-area::-webkit-scrollbar-thumb {
+  background: var(--sl-color-neutral-300);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.content-area::-webkit-scrollbar-thumb:hover {
+  background: var(--sl-color-neutral-400);
+}
+
+.summarize-btn::part(base) {
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(var(--sl-color-primary-500-rgb), 0.2);
+}
+
+.summarize-btn:hover::part(base) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(var(--sl-color-primary-500-rgb), 0.25);
 } 
