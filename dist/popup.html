@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="shoelace/themes/light.css">
+  <script src="shoelace-init.js" type="module"></script>
+  <script src="popup.js" type="module"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Essence.ai</h1>
+      <div class="header-actions">
+        <sl-button variant="neutral" size="small" class="history-btn" id="settingsBtn">
+          <sl-icon name="gear"></sl-icon>
+        </sl-button>
+        <sl-button variant="neutral" size="small" class="history-btn" id="historyBtn">
+          <sl-icon name="clock-history"></sl-icon>
+        </sl-button>
+      </div>
+    </div>
+
+    <div id="pending-queue" class="pending-queue">
+    </div>
+
+    <div class="button-container">
+      <sl-button variant="primary" id="summarizeBtn" size="small" class="summarize-btn">
+        <sl-icon name="file-text"></sl-icon>
+        Generate Summary
+      </sl-button>
+      <sl-button variant="success" id="saveBtn" size="small" class="save-btn hidden">
+        <sl-icon name="save"></sl-icon>
+      </sl-button>
+    </div>
+
+    <div id="content-area" class="content-area hidden">
+      <div id="skeleton" class="skeleton-container hidden">
+        <sl-skeleton effect="pulse"></sl-skeleton>
+        <sl-skeleton effect="pulse"></sl-skeleton>
+        <sl-skeleton effect="pulse"></sl-skeleton>
+        <sl-skeleton effect="pulse"></sl-skeleton>
+        <sl-skeleton effect="pulse"></sl-skeleton>
+      </div>
+
+      <div id="summary" class="summary-content"></div>
+    </div>
+  </div>
+</body>
+
+</html>
